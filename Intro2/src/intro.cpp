@@ -29,7 +29,7 @@ void Display() {
 
 void pantalla(float red, float green, float blue)
 {
-	//tamaño del punto usado en px
+	//tamaï¿½o del punto usado en px
 	glPointSize(5);
 	float* ColorFondo = RGBToFloat(red, green, blue);
 	//Configuracion del color de borrado o color de fondo
@@ -56,9 +56,9 @@ void funcion() {
 	glOrtho(-ejeX, ejeX, -ejeY, ejeY, -1, 1);
 	float y;
 	glBegin(GL_POINTS);
-	for (float i = -ejeX; i < ejeX; i += 0.1) {
-		y = sin(i * M_PI / 180);
-		glVertex2d(i, y);
+	for (float x = -ejeX; x < ejeX; x += 0.1) {
+		y = sin(x * M_PI / 180);
+		glVertex2d(x, y);
 	}
 	glEnd();
 }
