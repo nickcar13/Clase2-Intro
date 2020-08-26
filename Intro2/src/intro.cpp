@@ -1,11 +1,15 @@
+#define _USE_MATH_DEFINES
+
 #include <GL/glut.h>
 #include <iostream>
 #include <math.h>
+
 
 //variables globales
 float WIDTH = 500, HEIGHT = 500;
 static int RESOLUTIONX = 1366, RESOLUTIONY = 768;
 float colors[3] = {};
+float ejeY = 1.5, ejeX = 500;
 
 float* RGBToFloat(float red, float green, float blue) {
 	red = red / 255;
@@ -31,21 +35,31 @@ void pantalla(float red, float green, float blue)
 	//Configuracion del color de borrado o color de fondo
 	glClearColor(*ColorFondo, *(ColorFondo + 1), *(ColorFondo + 2), 1);
 	//Organizacion de los ejes en funcion de una vista ortogonal
-	
+
 	//limpieza inicial de la pantalla con el color predefinido anteriormente
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void ejes(float red, float green, float blue, int x, int y) {
-	glOrtho(-x, x, -y, y, -1, 1);
+void ejes(float red, float green, float blue) {
 
 	glColor3fv(RGBToFloat(red, green, blue));
 
 	glBegin(GL_LINES);
-	glVertex2d(0, -y);
-	glVertex2d(0, y);
-	glVertex2d(-x, 0);
-	glVertex2d(x, 0);
+	glVertex2d(0, -HEIGHT);
+	glVertex2d(0, HEIGHT);
+	glVertex2d(-WIDTH, 0);
+	glVertex2d(WIDTH, 0);
+	glEnd();
+}
+
+void funcion() {
+	glOrtho(-ejeX, ejeX, -ejeY, ejeY, -1, 1);
+	float y;
+	glBegin(GL_POINTS);
+	for (float i = -ejeX; i < ejeX; i += 0.1) {
+		y = sin(i * M_PI / 180);
+		glVertex2d(i, y);
+	}
 	glEnd();
 }
 
@@ -61,13 +75,12 @@ int main(int arg, char* argv[]) {
 	glutCreateWindow("Clase 2");
 	glutDisplayFunc(Display);
 
+	
 	pantalla(84, 84, 84);
-	ejes(233, 255, 249, 250, 250);
-
+	ejes(233, 255, 249);
+	funcion();
 	glutMainLoop();
 
-
-	//TODO graficar la funcion seno
 
 	return 0;
 }
